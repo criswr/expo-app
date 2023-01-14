@@ -4,7 +4,7 @@ import AddItem from './src/components/AddItem';
 import Modal from './src/components/Modal';
 
 export default function App() {
-  const [list, setList] = useState([{value: 'casa', completed: false}])
+  const [list, setList] = useState([])
   const [itemText, setItemText] = useState('')
   const [itemSelected, setItemSelected] = useState('')
   const [modalVisble, setModalVisible] = useState(false)
