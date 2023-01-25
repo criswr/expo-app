@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { StyleSheet, Text, View, FlatList, Pressable } from 'react-native';
+import { useFonts } from 'expo-font';
 import AddItem from './src/components/AddItem';
 import Modal from './src/components/Modal';
+import colors from './src/constants/colors';
 
 export default function App() {
   const [list, setList] = useState([])
@@ -9,6 +11,13 @@ export default function App() {
   const [itemSelected, setItemSelected] = useState('')
   const [modalVisble, setModalVisible] = useState(false)
 
+  const [loaded] = useFonts({
+    RobotoRegular: require("./src/assets/fonts/Roboto-Regular.ttf"),
+    RobotoBold: require("./src/assets/fonts/Roboto-Bold.ttf"),
+  })
+
+  if (!loaded) return null
+  
   const renderListItem = ({item}) => {
     return (
       <View style={styles.listItem}>
@@ -51,6 +60,31 @@ export default function App() {
     setModalVisible(false)
   }
 
+  let content = <View>
+    <Text style={styles.addFirstItem}>Add you first item:</Text>
+    <AddItem
+      textValue={itemText}
+      onAddItem={addItem}
+      onChange={handleOnChangeItem}
+    />
+    <Text style={styles.examples}>E.g. bread, oatmilk, rice, etc.</Text>
+    </View>
+
+  if (list.length > 0) {
+    content = <View style={styles.listContainer}>
+      <AddItem
+        textValue={itemText}
+        onAddItem={addItem}
+        onChange={handleOnChangeItem}
+      />
+
+      <FlatList
+        data={list}
+        renderItem={renderListItem}
+      />
+    </View>
+  }
+
   return (
     <View style={styles.container}>
       
@@ -58,18 +92,7 @@ export default function App() {
         <Text style={styles.titleText}>Shopping List App</Text>
       </View>
       
-      <View style={styles.listContainer}>
-        <AddItem
-          textValue={itemText}
-          onAddItem={addItem}
-          onChange={handleOnChangeItem}
-        />
-
-        <FlatList
-          data={list}
-          renderItem={renderListItem}
-        />
-      </View>
+      {content}
 
       <Modal
         isVisible={modalVisble}
@@ -94,9 +117,23 @@ const styles = StyleSheet.create({
   },
 
   titleText: {
-    color: 'white',
+    color: colors.primary,
+    fontFamily: 'RobotoRegular',
     fontWeight: 'bold',
     fontSize: '30',
+  },
+
+  addFirstItem: {
+    fontFamily: 'RobotoBold',
+    color: colors.primary,
+    fontSize: 25,
+    textAlign: 'center',
+    marginVertical: 40,
+  },
+
+  examples: {
+    color: colors.deactivated,
+    fontSize: 20
   },
 
   listContainer: {
@@ -105,7 +142,7 @@ const styles = StyleSheet.create({
 
   listItem: {
     borderBottomWidth:1,
-    borderColor: '#363636',
+    borderColor: colors.itemBorder,
     padding: 20,
     flexDirection: 'row',
     justifyContent:'space-between',
@@ -132,7 +169,7 @@ const styles = StyleSheet.create({
   },
 
   listItemTextCompleted: {
-    color:'#666666',
+    color: colors.deactivated,
     fontSize: 20,
   }, 
 });

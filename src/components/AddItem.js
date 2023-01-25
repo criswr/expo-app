@@ -1,5 +1,6 @@
 import React from "react"
 import { StyleSheet, TextInput, View, Pressable, Text } from "react-native"
+import colors from "../constants/colors"
 
 const AddItem = ({ onChange, textValue, onAddItem }) => {
   return (
@@ -32,16 +33,16 @@ const styles = StyleSheet.create({
   },
 
   addItemInput: {
-    color: 'white',
+    color: colors.primary,
     padding: 20,
     width: "80%",
     height: 50,
-    borderBottomColor: '#969696',
+    borderBottomColor: colors.secondary,
     borderBottomWidth: 1,
   },
 
   addButton: {
-    backgroundColor: '#1a1a1a',
+    backgroundColor: colors.background,
     width: '15%',
     height: 50,
     justifyContent: 'center',
@@ -49,6 +50,6 @@ const styles = StyleSheet.create({
   },
 
   addButtonText: {
-    color: 'white',
+    color: colors.primary,
   },
 })
