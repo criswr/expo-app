@@ -15,7 +15,9 @@ const Modal = ({
                 <Text style={styles.dismissButtonText}>✖</Text>
             </Pressable>
           <Text style={styles.modalTextStyle}>Delete {itemSelected.value}?</Text>
-          <Button title='Delete' onPress={() => actionDeleteItem()} />
+          <Button title='Delete' onPress={() => {
+            actionDeleteItem()
+          }} />
         </View>
       </View>
     </NewModal>
