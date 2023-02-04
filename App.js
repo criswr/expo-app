@@ -1,6 +1,14 @@
-import ItemNavigator from './src/navigation/ItemNavigator';
+import BottomTabNavigator from './src/navigation/BottomTabNavigator';
+import { NavigationContainer } from "@react-navigation/native";
+import ListContextProvider from "./src/components/context/ListContext";
 
 export default function App() {
   
-  return <ItemNavigator />
+  return (
+    <ListContextProvider>
+      <NavigationContainer>
+        <BottomTabNavigator />
+      </NavigationContainer>
+    </ListContextProvider>
+  )
 }

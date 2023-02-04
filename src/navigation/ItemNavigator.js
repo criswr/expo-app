@@ -8,13 +8,9 @@ const Stack = createNativeStackNavigator()
 
 export default ItemNavigator = () => {
     return (
-        <ListContextProvider>
-            <NavigationContainer>
-                <Stack.Navigator initialRouteName='List'>
-                    <Stack.Screen name='List' component={ToDoList}/>
-                    <Stack.Screen name='Edit' component={Edit}/>
-                </Stack.Navigator>
-            </NavigationContainer>
-        </ListContextProvider>
+        <Stack.Navigator initialRouteName='List'>
+            <Stack.Screen name='List' component={ToDoList}/>
+            <Stack.Screen name='Edit' component={Edit}/>
+        </Stack.Navigator>
     )
 }
