@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
 
     modalStyle: {
         margin: 20,
-        backgroundColor: 'white',
+        backgroundColor: 'fff',
         borderRadius: 10,
         paddingHorizontal: 25,
         paddingTop: 25,

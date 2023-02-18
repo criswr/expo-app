@@ -29,6 +29,6 @@ const styles = StyleSheet.create({
         color: colors.primary,
         fontFamily: 'RobotoRegular',
         fontWeight: 'bold',
-        fontSize: '30',
+        fontSize: 30,
       },
 })
