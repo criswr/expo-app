@@ -1,10 +1,8 @@
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import { Button, StyleSheet, Text, View } from 'react-native'
-import { ListContext } from './context/ListContext';
 import Modal from './Modal';
 
 const Edit = ({navigation}) => {
-  const {list, itemText, itemSelected, addItem, handleOnChangeItem, handleCheck, handleOnDelete, handleOnEdit} = useContext(ListContext)
 
   const [modalVisble, setModalVisible] = useState(false)
 

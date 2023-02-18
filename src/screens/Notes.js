@@ -1,12 +1,15 @@
 import { useContext, useState } from 'react';
 import { StyleSheet, Text, View, FlatList, Pressable } from 'react-native';
 import { useFonts } from 'expo-font';
-import AddItem from './AddItem';
+import AddItem from '../components/AddItem';
 import colors from '../constants/colors';
-import { ListContext } from './context/ListContext';
+import { useSelector } from 'react-redux';
 
-const ToDoList = ({navigation}) => {
-  const {list, itemText, itemSelected, addItem, handleOnChangeItem, handleCheck, handleOnDelete, handleOnEdit} = useContext(ListContext)
+const Notes = ({navigation}) => {
+  const [itemText, setItemText] = useState('')
+  /* const [list, setList] = useState([]) */
+
+  const notes = useSelector((state) => state.notes.notes)
 
   const [loaded] = useFonts({
     RobotoRegular: require("../assets/fonts/Roboto-Regular.ttf"),
@@ -33,13 +36,27 @@ const ToDoList = ({navigation}) => {
     )
   }
 
+  const getCurrentDate = (separator='-') => {
+    let newDate = new Date()
+    let date = newDate.getDate();
+    let month = newDate.getMonth() + 1;
+    let year = newDate.getFullYear();
+    
+    return `${date}${separator}${month<10?`0${month}`:`${month}`}${separator}${year}`
+  }
+
+  const addItem = () => {
+    console.log(itemText)
+    itemText !== '' && setList(prevState => [...prevState, {value: itemText, completed: false, timestamp: getCurrentDate()}])
+    setItemText('')
+  }
+
+  const handleOnChangeItem = text => {
+    setItemText(text)
+  }
+
   return (
-    <View style={styles.container}>
-      
-      <View style={styles.titleContainer}>
-        <Text style={styles.titleText}>Shopping List App</Text>
-      </View>
-      
+    <View style={styles.container}>      
       <View style={styles.listContainer}>
         <AddItem
           textValue={itemText}
@@ -48,7 +65,7 @@ const ToDoList = ({navigation}) => {
         />
 
         <FlatList
-          data={list}
+          data={notes}
           renderItem={renderListItem}
         />
       </View>
@@ -57,7 +74,7 @@ const ToDoList = ({navigation}) => {
   );
 }
 
-export default ToDoList;
+export default Notes;
 
 const styles = StyleSheet.create({
   container: {

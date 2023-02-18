@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import colors from '../constants/colors'
 
-const Notes = () => {
+const AddNotes = () => {
   return (
     <View style={styles.container}>
         <View style={styles.titleContainer}>
@@ -12,7 +12,7 @@ const Notes = () => {
   )
 }
 
-export default Notes
+export default AddNotes
 
 const styles = StyleSheet.create({
     container: {

@@ -2,14 +2,15 @@ import { StyleSheet, View, Text } from 'react-native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import Ionicons from '@expo/vector-icons/Ionicons'
 import ItemNavigator from './ItemNavigator'
-import Notes from '../components/Notes'
+import colors from '../constants/colors'
+import AddNotes from '../screens/AddNote'
 
 const BottomTabs = createBottomTabNavigator()
 
 const BottomTabNavigator = () => {
   return (
     <BottomTabs.Navigator
-    initialRouteName='ShopTab'
+    initialRouteName='NotesTab'
     screenOptions={{
       headerShown: false,
       tabBarShowLabel: false,
@@ -17,25 +18,23 @@ const BottomTabNavigator = () => {
     }}
   >
     <BottomTabs.Screen
-      name='ShopTab'
+      name='NotesTab'
       component={ItemNavigator}
       options={{
         tabBarIcon: () => (
           <View style={styles.icon}>
-            <Ionicons name='list-outline' size={15} color='black' />
-            <Text>List</Text>
+            <Ionicons name='list-outline' size={30} color='white' />
           </View>
         ),
       }}
     />
     <BottomTabs.Screen
-      name='CartTab'
-      component={Notes}
+      name='AddTab'
+      component={AddNotes}
       options={{
         tabBarIcon: () => (
           <View style={styles.icon}>
-            <Ionicons name='pencil-outline' size={15} color='black' />
-            <Text>Notes</Text>
+            <Ionicons name='add-circle-outline' size={30} color='white' />
           </View>
         ),
       }}
@@ -48,7 +47,8 @@ export default BottomTabNavigator
 
 const styles = StyleSheet.create({
   tabBar: {
-    height: 70,
+    height: 50,
+    backgroundColor: colors.background
   },
   icon: {
     flex: 1,
