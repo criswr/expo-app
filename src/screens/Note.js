@@ -1,19 +1,21 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import colors from '../constants/colors'
 import { useDispatch, useSelector } from 'react-redux'
 
-const AddNote = ({navigation}) => {
+const Note = ({navigation}) => {
+  const note = useSelector(state => state.notes.selected)
+
   return (
     <View style={styles.container}>
-        <View style={styles.titleContainer}>
-            <Text style={styles.titleText}>Add note</Text>
-        </View>
+        <ScrollView  style={styles.titleContainer}>
+            <Text style={styles.titleText}>{note.value}</Text>
+        </ScrollView>
     </View>
   )
 }
 
-export default AddNote
+export default Note
 
 const styles = StyleSheet.create({
     container: {

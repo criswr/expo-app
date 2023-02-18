@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import Ionicons from '@expo/vector-icons/Ionicons'
 import ItemNavigator from './ItemNavigator'
 import colors from '../constants/colors'
-import AddNotes from '../screens/AddNote'
+import AddNote from '../screens/AddNote'
 
 const BottomTabs = createBottomTabNavigator()
 
@@ -30,7 +30,7 @@ const BottomTabNavigator = () => {
     />
     <BottomTabs.Screen
       name='AddTab'
-      component={AddNotes}
+      component={AddNote}
       options={{
         tabBarIcon: () => (
           <View style={styles.icon}>
@@ -47,7 +47,7 @@ export default BottomTabNavigator
 
 const styles = StyleSheet.create({
   tabBar: {
-    height: 50,
+    height: 70,
     backgroundColor: colors.background
   },
   icon: {

@@ -1,15 +1,20 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { StyleSheet, Text, View, FlatList, Pressable } from 'react-native';
 import { useFonts } from 'expo-font';
-import AddItem from '../components/AddItem';
+import Ionicons from '@expo/vector-icons/Ionicons'
+import { useDispatch, useSelector } from 'react-redux';
+
 import colors from '../constants/colors';
-import { useSelector } from 'react-redux';
+import { selectedNote } from '../store/actions/notes.action';
+
 
 const Notes = ({navigation}) => {
   const [itemText, setItemText] = useState('')
-  /* const [list, setList] = useState([]) */
 
   const notes = useSelector((state) => state.notes.notes)
+  const dispatch = useDispatch()
+
+  const truncate = (str) => (str.length > 20) ? str.slice(0, 19) + '...' : str
 
   const [loaded] = useFonts({
     RobotoRegular: require("../assets/fonts/Roboto-Regular.ttf"),
@@ -17,20 +22,21 @@ const Notes = ({navigation}) => {
   })
 
   if (!loaded) return null
+
+  const handleOnEdit = (value) => {
+    dispatch(selectedNote(value))
+  }
   
   const renderListItem = ({item}) => {
     return (
       <View style={styles.listItem}>
         <View style={styles.listItemTextContainer}>
-          <Pressable
-            onPress={() => handleCheck(item)}
-          ><Text style={styles.listCheck}>{item.completed ? '◉' : '◎'}</Text></Pressable>
-          <Text style={[item.completed ? styles.listItemTextCompleted : styles.listItemText]}>{item.value}</Text>
+          <Text style={styles.listItemText}>{truncate(item.value)}</Text>
         </View>
         <Pressable onPress={() => {
-          handleOnEdit(item)
-          navigation.navigate('Edit')}}>
-          <Text style={styles.editButtonText}>Edit</Text>
+          handleOnEdit(item.value)
+          navigation.navigate('Note')}}>
+          <Ionicons name='chevron-forward-outline' size={20} color='white' />
         </Pressable>
       </View>
     )
@@ -58,12 +64,6 @@ const Notes = ({navigation}) => {
   return (
     <View style={styles.container}>      
       <View style={styles.listContainer}>
-        <AddItem
-          textValue={itemText}
-          onAddItem={addItem}
-          onChange={handleOnChangeItem}
-        />
-
         <FlatList
           data={notes}
           renderItem={renderListItem}
@@ -128,19 +128,4 @@ const styles = StyleSheet.create({
     color:'#ebebeb',
     fontSize: 20,
   },
-
-  editButtonText: {
-    color: 'ccc'
-  },
-
-  listCheck: {
-    fontSize: 22,
-    color: '#949494',
-    width: 40,
-  },
-
-  listItemTextCompleted: {
-    color: colors.deactivated,
-    fontSize: 20,
-  }, 
 });
