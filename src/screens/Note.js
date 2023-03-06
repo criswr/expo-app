@@ -8,7 +8,11 @@ const Note = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-        <ScrollView  style={styles.titleContainer}>
+          <Text style={styles.listItemDetails}>Added on {note.timestamp}</Text>
+          {note.location &&
+            <Text style={styles.listItemDetails}>At {note.location.lat}, {note.location.lng}</Text>
+          }
+        <ScrollView style={styles.titleContainer}>
             <Text style={styles.titleText}>{note.value}</Text>
         </ScrollView>
     </View>
@@ -18,19 +22,25 @@ const Note = ({navigation}) => {
 export default Note
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#252526',
-        paddingHorizontal: 30,
-      },
-      
-      titleContainer: {
-        paddingTop: 50,
-      },
+  container: {
+    flex: 1,
+    backgroundColor: '#252526',
+    paddingHorizontal: 30,
+  },
     
-      titleText: {
-        color: colors.primary,
-        fontFamily: 'RobotoRegular',
-        fontSize: 20,
-      },
+  titleContainer: {
+    paddingTop: 20,
+  },
+
+  titleText: {
+    color: colors.primary,
+    fontFamily: 'RobotoRegular',
+    fontSize: 20,
+  },
+
+  listItemDetails: {
+    color: colors.deactivated,
+    paddingVertical: 5
+
+  }
 })

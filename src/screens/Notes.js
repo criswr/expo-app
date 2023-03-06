@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { StyleSheet, Text, View, FlatList, Pressable } from 'react-native';
 import { useFonts } from 'expo-font';
 import Ionicons from '@expo/vector-icons/Ionicons'
@@ -9,8 +8,6 @@ import { selectedNote } from '../store/actions/notes.action';
 
 
 const Notes = ({navigation}) => {
-  const [itemText, setItemText] = useState('')
-
   const notes = useSelector((state) => state.notes.notes)
   const dispatch = useDispatch()
 
@@ -29,36 +26,19 @@ const Notes = ({navigation}) => {
   
   const renderListItem = ({item}) => {
     return (
-      <View style={styles.listItem}>
+      <Pressable style={styles.listItem} onPress={() => {
+        handleOnEdit(item.value)
+        navigation.navigate('Note')}}>
         <View style={styles.listItemTextContainer}>
           <Text style={styles.listItemText}>{truncate(item.value)}</Text>
+          <Text style={styles.listItemDetails}>Added on {item.timestamp}</Text>
+          {item.location &&
+            <Text style={styles.listItemDetails}>At {item.location.lat}, {item.location.lng}</Text>
+          }
         </View>
-        <Pressable onPress={() => {
-          handleOnEdit(item.value)
-          navigation.navigate('Note')}}>
-          <Ionicons name='chevron-forward-outline' size={20} color='white' />
-        </Pressable>
-      </View>
+        <Ionicons name='chevron-forward-outline' size={20} color='white' />
+      </Pressable>
     )
-  }
-
-  const getCurrentDate = (separator='-') => {
-    let newDate = new Date()
-    let date = newDate.getDate();
-    let month = newDate.getMonth() + 1;
-    let year = newDate.getFullYear();
-    
-    return `${date}${separator}${month<10?`0${month}`:`${month}`}${separator}${year}`
-  }
-
-  const addItem = () => {
-    console.log(itemText)
-    itemText !== '' && setList(prevState => [...prevState, {value: itemText, completed: false, timestamp: getCurrentDate()}])
-    setItemText('')
-  }
-
-  const handleOnChangeItem = text => {
-    setItemText(text)
   }
 
   return (
@@ -67,6 +47,7 @@ const Notes = ({navigation}) => {
         <FlatList
           data={notes}
           renderItem={renderListItem}
+          inverted={true}
         />
       </View>
 
@@ -121,11 +102,15 @@ const styles = StyleSheet.create({
   },
 
   listItemTextContainer: {
-    flexDirection: 'row',
+    flexDirection: 'column',
   },
 
   listItemText: {
     color:'#ebebeb',
     fontSize: 20,
   },
+
+  listItemDetails: {
+    color: colors.deactivated
+  }
 });
