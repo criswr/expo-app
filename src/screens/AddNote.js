@@ -14,7 +14,8 @@ const AddNote = ({navigation}) => {
   const handleOnSave = () => {
     dispatch(addedNote(newNote, newLocation))
     setNewNote('')
-    navigation.navigate('NotesTab')
+    setNewLocation(null)
+    navigation.navigate('List')
   }
 
   return (
@@ -65,7 +66,9 @@ const styles = StyleSheet.create({
       textInputNote: {
         flex: 1,
         textAlignVertical: 'top',
-        color: colors.secondary
+        color: colors.secondary,
+    fontSize: 20,
+
       },
 
       titleSave: {

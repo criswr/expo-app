@@ -31,7 +31,7 @@ const Notes = ({navigation}) => {
         navigation.navigate('Note')}}>
         <View style={styles.listItemTextContainer}>
           <Text style={styles.listItemText}>{truncate(item.value)}</Text>
-          <Text style={styles.listItemDetails}>Added on {item.timestamp}</Text>
+          <Text style={styles.listItemDetails}>{item.timestamp}</Text>
           {item.location &&
             <Text style={styles.listItemDetails}>At {item.location.lat}, {item.location.lng}</Text>
           }

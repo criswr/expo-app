@@ -1,4 +1,4 @@
-import { SELECTED_NOTE, ADD_NOTE } from "../actions/notes.action";
+import { SELECTED_NOTE, ADD_NOTE, EDIT_NOTE } from "../actions/notes.action";
 
 
 const initialState = {
@@ -14,10 +14,17 @@ const NotesReducer = (state = initialState, action) => {
     switch (action.type) {
         case SELECTED_NOTE:
             return {...state, selected: state.notes.find(item => item.value === action.noteValue)}
+
         case ADD_NOTE:
             const newNote = {value: action.noteValue, timestamp: action.noteTimestamp, location: action.noteLocation}
             const updatedNotes = [...state.notes, newNote]
             return {...state, notes: updatedNotes}
+
+        case EDIT_NOTE:
+            const editedNote = {value: action.noteValue, timestamp: action.noteTimestamp, location: action.noteLocation}
+            const filteredNotes = state.notes.filter(item => item.value !== state.selected.value)
+            return {...state, notes: [...filteredNotes, editedNote]}
+
         default:
             return state
     }
