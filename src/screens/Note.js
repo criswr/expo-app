@@ -1,9 +1,10 @@
-import { Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Alert, Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import Ionicons from '@expo/vector-icons/Ionicons'
 import React, { useLayoutEffect, useState } from 'react'
 import colors from '../constants/colors'
 import { useDispatch, useSelector } from 'react-redux'
-import { editedNote } from '../store/actions/notes.action'
+import { deletedNote, editedNote } from '../store/actions/notes.action'
+import SaveButton from '../components/SaveButton'
 
 const Note = ({navigation}) => {
   const dispatch = useDispatch()
@@ -15,7 +16,29 @@ const Note = ({navigation}) => {
 
   const handleOnEdit = () => {
     dispatch(editedNote(editedValue, editedLocation))
+    setEditedValue(note.value)
     navigation.goBack()
+  }
+
+  const handleOnDelete = () => {
+    return (
+      Alert.alert(
+        'Delete this note?',
+        'This action can not be reversed.',
+        [
+          {
+            text: 'Delete',
+            onPress: () => {
+              dispatch(deletedNote())
+              navigation.goBack()
+            }
+          },
+          {
+            text: 'Cancel'
+          }
+        ]
+      )
+    )
   }
 
   useLayoutEffect(() => {
@@ -23,7 +46,7 @@ const Note = ({navigation}) => {
       headerRight: () => (
         note.value !== editedValue &&
         <TouchableOpacity onPress={() => handleOnEdit()}>
-          <Text style={styles.titleSave}>Save</Text>
+          <SaveButton />
         </TouchableOpacity>
       )
     })
@@ -42,6 +65,10 @@ const Note = ({navigation}) => {
           onChangeText={(text) => setEditedValue(text)}
           value={editedValue}
         />
+        <Pressable style={styles.deleteButton} onPress={() => {handleOnDelete()}}>
+          <Ionicons name='trash-outline' size={15} color={colors.highlighted} />
+          <Text style={styles.deleteText}>Delete note</Text>
+        </Pressable>
     </View>
   )
 }
@@ -80,5 +107,17 @@ const styles = StyleSheet.create({
   
   titleSave: {
     color: colors.secondary
+  },
+
+  deleteButton: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  
+  deleteText: {
+    color: colors.highlighted,
+    marginLeft: 5,
+    marginVertical: 10
   }
 })

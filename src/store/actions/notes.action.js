@@ -1,6 +1,7 @@
 export const SELECTED_NOTE = 'SELECTED_NOTE'
 export const ADD_NOTE = 'ADD_NOTE'
 export const EDIT_NOTE = 'EDIT_NOTE'
+export const DELETE_NOTE = 'DELETE_NOTE'
 
 
 const getCurrentDate = (separator='-') => {
@@ -32,5 +33,11 @@ export const editedNote = (value, location) => {
         noteValue: value,
         noteTimestamp: getCurrentDate(),
         noteLocation: location
+    })
+}
+
+export const deletedNote = () => {
+    return ({
+        type: DELETE_NOTE,
     })
 }

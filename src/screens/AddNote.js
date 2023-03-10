@@ -4,6 +4,7 @@ import colors from '../constants/colors'
 import { useDispatch, useSelector } from 'react-redux'
 import { addedNote } from '../store/actions/notes.action'
 import LocationSelector from '../components/LocationSelector'
+import SaveButton from '../components/SaveButton'
 
 const AddNote = ({navigation}) => {
   const dispatch = useDispatch()
@@ -24,7 +25,7 @@ const AddNote = ({navigation}) => {
             <Text style={styles.titleText}>Add note</Text>
             {newNote !== '' &&
               <Pressable onPress={() => handleOnSave()}>
-                <Text style={styles.titleSave}>Save</Text>
+                <SaveButton />
               </Pressable>
             }
         </View>
