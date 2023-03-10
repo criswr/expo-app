@@ -1,4 +1,4 @@
-import { SELECTED_NOTE, ADD_NOTE, EDIT_NOTE, DELETE_NOTE } from "../actions/notes.action";
+import { SELECTED_NOTE, ADD_NOTE, EDIT_NOTE, DELETE_NOTE, LOAD_NOTES } from "../actions/notes.action";
 
 
 const initialState = {
@@ -28,6 +28,13 @@ const NotesReducer = (state = initialState, action) => {
         case DELETE_NOTE:
             const nonDeletedNotes = state.notes.filter(item => item.value !== state.selected.value)
             return {...state, notes: nonDeletedNotes}
+
+        case LOAD_NOTES:
+            return {...state, notes: action.storedNotes.map(item => ({
+                value: item.value, 
+                timestamp: item.timestamp, 
+                location: item.locationLat ? {lat: item.locationLat, lng: item.locationLng} : null
+            }))}
 
         default:
             return state

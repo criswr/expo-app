@@ -1,17 +1,22 @@
+import { useEffect } from 'react';
 import { StyleSheet, Text, View, FlatList, Pressable } from 'react-native';
 import { useFonts } from 'expo-font';
 import Ionicons from '@expo/vector-icons/Ionicons'
 import { useDispatch, useSelector } from 'react-redux';
 
 import colors from '../constants/colors';
-import { selectedNote } from '../store/actions/notes.action';
+import { loadNotes, selectedNote } from '../store/actions/notes.action';
 
 
 const Notes = ({navigation}) => {
   const notes = useSelector((state) => state.notes.notes)
   const dispatch = useDispatch()
-
+  
   const truncate = (str) => (str.length > 20) ? str.slice(0, 19) + '...' : str
+
+  useEffect(() => {
+    dispatch(loadNotes())
+  }, [])
 
   const [loaded] = useFonts({
     RobotoRegular: require("../assets/fonts/Roboto-Regular.ttf"),

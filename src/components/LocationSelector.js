@@ -12,7 +12,7 @@ const LocationSelector = (props) => {
         const {status} = await Location.requestForegroundPermissionsAsync()
 
         if (status !== 'granted') {
-            Alert.alert('Location permissions needed', 'Location permissions are needed to us this feature', [{text: OK}])
+            Alert.alert('Location permissions needed', 'Location permissions are needed to use this feature', [{text: Ok}])
             return false
         }
         
