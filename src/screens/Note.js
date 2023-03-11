@@ -5,6 +5,7 @@ import colors from '../constants/colors'
 import { useDispatch, useSelector } from 'react-redux'
 import { deletedNote, editedNote } from '../store/actions/notes.action'
 import SaveButton from '../components/SaveButton'
+import ReverseGeocoding from '../components/ReverseGeocoding'
 
 const Note = ({navigation}) => {
   const dispatch = useDispatch()
@@ -57,7 +58,7 @@ const Note = ({navigation}) => {
           <Text style={styles.listItemDetails}>{note.timestamp}</Text>
 
           {note.location &&
-            <Text style={styles.listItemDetails}>At {note.location.lat}, {note.location.lng}</Text>
+            <Text style={styles.listItemDetails}>At <ReverseGeocoding locationData={note.location} /></Text>
           }
 
         <TextInput style={styles.textInputNote}

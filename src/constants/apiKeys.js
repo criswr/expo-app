@@ -1,3 +1,3 @@
 export default {
-    googleMapsKey: 'AIzaSyBNlxuzK4qjaGC9WZG2d1nysJskLj7BQ2A'
+    googleMapsKey: 'AIzaSyB2qJbM8TN2Mjm9C__pj1T42WmBHxF9fgQ'
 }

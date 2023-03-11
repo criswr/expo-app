@@ -4,6 +4,8 @@ import Ionicons from '@expo/vector-icons/Ionicons'
 import * as Location from 'expo-location'
 import colors from '../constants/colors'
 import googleMapsKey from '../constants/apiKeys'
+import ReverseGeocoding from './ReverseGeocoding'
+
 
 const LocationSelector = (props) => {
     const [pickedLocation, setPickedLocation] = useState()
@@ -31,9 +33,6 @@ const LocationSelector = (props) => {
             lng: location.coords.longitude
         }
 
-        /* const geocoding = await fetch (`https://maps.googleapis.com/maps/api/geocode/json?latlng=${locationData.lat},${locationData.lng}&key=${googleMapsKey}`) */
-
-
         setPickedLocation(locationData)
         props.onLocation(locationData)
     }
@@ -43,7 +42,7 @@ const LocationSelector = (props) => {
       {
       pickedLocation 
       ? 
-      <View style={styles.directionRow}><Ionicons name='location-outline' size={20} color='deepskyblue' /><Text style={styles.locationText}>At {pickedLocation.lat}, {pickedLocation.lng}</Text></View>
+      <Pressable onPress={handleGetLocation} style={styles.directionRow}><Ionicons name='location-outline' size={20} color='deepskyblue' /><Text style={styles.locationText}>At <ReverseGeocoding locationData={pickedLocation}/></Text></Pressable>
       : 
       <Pressable onPress={handleGetLocation} style={styles.directionRow}><Ionicons name='location-outline' size={20} color='white' /><Text style={styles.locationText}>Location</Text></Pressable>
       }
@@ -59,7 +58,7 @@ const styles = StyleSheet.create({
         marginVertical: 10
     },
     locationText: {
-        color: colors.primary,
+        color: colors.deactivated,
         marginLeft: 5
     }
 })

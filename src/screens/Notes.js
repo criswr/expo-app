@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import colors from '../constants/colors';
 import { loadNotes, selectedNote } from '../store/actions/notes.action';
+import ReverseGeocoding from '../components/ReverseGeocoding';
 
 
 const Notes = ({navigation}) => {
@@ -38,7 +39,7 @@ const Notes = ({navigation}) => {
           <Text style={styles.listItemText}>{truncate(item.value)}</Text>
           <Text style={styles.listItemDetails}>{item.timestamp}</Text>
           {item.location &&
-            <Text style={styles.listItemDetails}>At {item.location.lat}, {item.location.lng}</Text>
+            <Text style={styles.listItemDetails}>At <ReverseGeocoding locationData={item.location} /></Text>
           }
         </View>
         <Ionicons name='chevron-forward-outline' size={20} color='white' />
