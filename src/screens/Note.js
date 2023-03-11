@@ -15,7 +15,7 @@ const Note = ({navigation}) => {
   const [editedLocation, setEditedLocation] = useState(note.location)
 
   const handleOnEdit = () => {
-    dispatch(editedNote(editedValue, editedLocation))
+    dispatch(editedNote(editedValue, editedLocation, note.value))
     setEditedValue(note.value)
     navigation.goBack()
   }
@@ -29,7 +29,7 @@ const Note = ({navigation}) => {
           {
             text: 'Delete',
             onPress: () => {
-              dispatch(deletedNote())
+              dispatch(deletedNote(note.value))
               navigation.goBack()
             }
           },

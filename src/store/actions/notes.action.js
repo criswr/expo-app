@@ -1,4 +1,4 @@
-import { fetchNotes, insertNote } from "../../../db"
+import { deleteNote, fetchNotes, insertNote } from "../../../db"
 
 export const SELECTED_NOTE = 'SELECTED_NOTE'
 export const ADD_NOTE = 'ADD_NOTE'
@@ -23,7 +23,7 @@ export const selectedNote = value => ({
 
 export const addedNote = (value, location) => {
     const result = insertNote(value, getCurrentDate(), location ? location.lat : null, location ? location.lng : null)
-    console.log('added', result)
+    console.log(result)
     return ({
         type: ADD_NOTE,
         noteValue: value,
@@ -32,7 +32,10 @@ export const addedNote = (value, location) => {
     })
 }
 
-export const editedNote = (value, location) => {
+export const editedNote = (value, location, oldValue) => {
+    const insertResult = insertNote(value, getCurrentDate(), location ? location.lat : null, location ? location.lng : null)
+    const deleteResult = deleteNote(oldValue)
+    console.log(insertResult, deleteResult)
     return ({
         type: EDIT_NOTE,
         noteValue: value,
@@ -41,10 +44,17 @@ export const editedNote = (value, location) => {
     })
 }
 
-export const deletedNote = () => {
-    return ({
-        type: DELETE_NOTE,
-    })
+export const deletedNote = (value) => {
+    return async dispatch => {
+        try {
+            const result = await deleteNote(value)
+            console.log(result)
+            dispatch({
+                type: DELETE_NOTE,
+            })
+        }
+        catch (err) {console.log(err)}
+    }
 }
 
 export const loadNotes = () => {

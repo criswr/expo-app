@@ -43,3 +43,17 @@ export const fetchNotes = () => {
     })
     return promise
 }
+
+export const deleteNote = (value) => {
+    const promise = new Promise((res, rej) => {
+        db.transaction(tx => {
+            tx.executeSql(
+                'DELETE FROM notes WHERE value=(?)',
+                [value],
+                (_, result) => res(result),
+                (_, err) => rej(err)
+            )
+        })
+    })
+    return promise
+}
